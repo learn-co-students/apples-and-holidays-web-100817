@@ -37,9 +37,7 @@ def add_supply_to_memorial_day(holiday_hash, supply)
 end
 
 def add_new_holiday_with_supplies(holiday_hash, season, holiday_name, supply_array)
-  holiday_name<<supply_array
-  season<<holiday_name
-  holiday_hash<<season
+  holiday_hash[season][holiday_name] = supply_array
   return holiday_hash
 end
 
@@ -58,15 +56,8 @@ def all_supplies_in_holidays(holiday_hash)
   holiday_hash.each do |season,holidays|
     puts "#{season.capitalize}:"
     holidays.each do |holiday,supplies|
-      split_holiday=holiday.to_s.split
-      split_holiday.each do |word|
-        word.capitalize
-      end
-      split_holiday.join
-      puts "#{split_holiday.to_s}: #{supplies.to_s}"
-    #<IO:<STDOUT>> received :puts with unexpected arguments
-    #  expected: ("  Christmas: Lights, Wreath")
-    #       got: ("[\"christmas\"]: [\"Lights\", \"Wreath\"]")
+     word = holiday.to_s.split("_").each {|word| word.capitalize!}.join(" ")
+     puts "  #{word}: #{supplies.join(", ")}"
     end
   end
 end
